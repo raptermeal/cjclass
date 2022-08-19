@@ -1,37 +1,33 @@
-def find_nav(save_list_add):
-    # save_list_add =         [0.669,	0.873,	3.205,
-    #     0.65,	0.117,	3.949,
-    #     0.158,	0.098,	1.557,
-    #     0.205,	0.594,	1.301,
-    #     0.878,	0.685,	3.583] # 1 | attention
+# from pathlib import Path
+# import os
+# url = 'https://static.hyundailivart.co.kr/upload_ctn/board/ME00000036/B000003365/B000003365_MnImgPath.jpg/dims/autorotate/on'
 
+# img_full_path = Path(url).name
+# print(img_full_path)
 
-    # print(save_list_add[0])
-    a = [save_list_add[2],save_list_add[5],save_list_add[8],save_list_add[11],save_list_add[14]]
+# import os
+# from urllib.parse import urlparse
 
-    smallest = a[0]
+# url = 'http://www.plssomeotherurl.com/station.pls?id=111'
+# path = urlparse(url).path
+# ext = os.path.splitext(path)[1]
+# print(ext)
 
-    for i in a:
-        if i < smallest:
-            smallest = i
-            
-            
-    # print(i,smallest)
-    # print(min(a))
-    # print(a.index(min(a)))
+import requests
+from pathlib import Path
 
-    # print(3*(a.index(min(a)) + 1)-3,3*(a.index(min(a)) + 1)-2,3*(a.index(min(a)) + 1)-1)
+# req0 = requests.get('https://mall-image.tving.com/media/file/goods/2020/07/50a101706b3e69dec13b9ddb69aa9442.jpg')
+# file = open("yes.jpg",mode="wb")
+# file.write(req0.content)
+# file.close()
 
-    if save_list_add[3*(a.index(min(a)) + 1)-3] > 0.5:
-        xxx='right'
-    else:
-        xxx='left'
-        
-    if save_list_add[3*(a.index(min(a)) + 1)-2] > 0.5:
-        yyy='up'
-    else:
-        yyy='down'
-
-    # print(xxx,yyy,str(round(min(a),1))+'meter')
-    # left up 1.3meter
-    return xxx,yyy,str(round(min(a),1))+'meter'
+# # 아래는 헤더 참고용 코드입니다.
+# print(req0.headers)
+url = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSntroMb9pRv6LTpN_qr91ttN5t8s602LzJeQ&usqp=CAU'
+req1 = requests.get(url)
+if req1.headers['Content-Type'] == 'image/jpeg':
+    ext = '.png'
+filename = Path(url).name
+filename_new = ''.join(char for char in filename if char.isalnum())
+file = open(filename_new+ext,mode="wb")
+file.write(req1.content)

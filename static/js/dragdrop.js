@@ -84,7 +84,7 @@ function updatetags (data) {
   <p> : Voice Assistant</p>
 
   
-  <audio controls autoplay src="${data.sound_path}"></audio>
+  <audio controls autoplay src="/${data.sound_path}"></audio>
   <br>
   <h2>Path advisor</h2>
   <p> : show string data</p>

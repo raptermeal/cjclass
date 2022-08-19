@@ -2,7 +2,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from app.library.helpers import *
+from app.library.helpers import openfile
 from app.routers import twoforms, unsplash, accordion, upload_re, video, image, yolov5
 # import uvicorn
 
@@ -23,6 +23,7 @@ templates = Jinja2Templates(directory="templates")
 # audio_path = Path("audio/test.mp4")
 
 app.mount("/videos", StaticFiles(directory="videos"), name="videos")
+app.mount("/app", StaticFiles(directory="app"), name="app")
 # app.mount("/audio", StaticFiles(directory="audio"), name="audio")
 app.mount("/static", StaticFiles(directory="static"), name="static")
 app.mount("/images", StaticFiles(directory="images"), name="images")

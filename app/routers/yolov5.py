@@ -8,7 +8,7 @@ from app.library import yolov5_detect
 # from app.library import inference_classfication
 from pathlib import Path
 from app.library.tts import makedirs, save_sound
-import yaml, copy
+import yaml, copy, requests
 
 router = APIRouter()    
 templates = Jinja2Templates(directory="templates/")
@@ -24,11 +24,34 @@ def get_upload(request: Request):
 async def post_upload(imgdata: tuple, file: UploadFile = File(...)):
     path_root = 'yolov5_result_image'
     workspace = create_workspace(path_root)
-    file_path = Path(file.filename)
-    img_full_path = workspace / file_path
+    # file_path = Path(file.filename)
+    
+    
+    file_path = Path(file.filename).name
+    file_path = ''.join(char for char in file_path if char.isalnum())
+    # file_path = Path(file.filename)
+    # 가져온 url이 확장자가 없는경우 확장자를 추가
+    if not "." in file_path:
+        file_path = file_path + '.png'
+    img_full_path = Path(workspace / file_path)
     with open(str(img_full_path), 'wb') as myfile:
         contents = await file.read()
         myfile.write(contents)
+        
+        
+        
+    # url = str(file.filename)
+    # req1 = requests.get(url)
+    # if req1.headers['Content-Type'] == 'image/jpeg':
+    #     ext = '.png'
+    # filename = Path(url).name
+    # filename_new = ''.join(char for char in filename if char.isalnum())
+    # img_full_path = str(workspace / filename_new+ext)
+    # file = open(img_full_path,mode="wb")
+    # file.write(req1.content)
+
+
+
 
     # classs, classs_n, rename_result = yolov5_detect.run(file)
     classs, classs_n, rename_result = yolov5_detect.run(img_full_path)
@@ -85,4 +108,5 @@ async def post_upload(imgdata: tuple, file: UploadFile = File(...)):
         "advice_price": word,
     }
 
+    print(data)
     return data
